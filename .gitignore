@@ -1,0 +1,18 @@
+# 來源書（不納入版控）
+chisel-book.pdf
+
+# build / 工具產物
+target/
+project/target/
+project/project/
+.bsp/
+.bloop/
+.metals/
+.scala-build/
+*.vcd
+*.fir
+generated/
+test_run_dir/
+
+# ChiselSim 模擬工作目錄
+build/

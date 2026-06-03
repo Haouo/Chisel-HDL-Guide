@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install sbt
+        uses: sbt/setup-sbt@v1
+
+      # ChiselSim 的模擬後端需要 Verilator
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+
+      - name: Compile
+        run: sbt compile
+
+      - name: Run ChiselSim tests
+        run: sbt test
+
+      - name: Emit SystemVerilog (smoke)
+        run: sbt "runMain handout.Main"
