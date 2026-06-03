@@ -157,6 +157,26 @@ implicit val view: DataView[CoreMemReq, BusReq] = DataView(_ => new BusReq,
 
 bus := core.viewAs[BusReq]
 ```
+
+### Scala 語法：`implicit val` 也可以放 typeclass instance
+
+Part 10 的 `implicit p: Parameters` 是「自動補一個參數」。這裡的 `implicit val view` 是另一種常見用途：
+把一個型別轉換規則放進 implicit scope，讓 `viewAs[BusReq]` 能自動找到它。可以把 `DataView[CoreMemReq, BusReq]`
+想成「如何把 CoreMemReq 看成 BusReq」的 typeclass instance。
+
+```scala
+implicit val view: DataView[CoreMemReq, BusReq] = ...
+bus := core.viewAs[BusReq]    // compiler 在附近找 implicit DataView[CoreMemReq, BusReq]
+```
+
+如果沒有這個 implicit value，`viewAs[BusReq]` 就不知道欄位怎麼對應。這和 `implicit p: Parameters`
+同樣是 Scala 隱式解析機制，但語意不同：
+
+| 寫法 | 用途 |
+|------|------|
+| `(implicit p: Parameters)` | 呼叫 constructor/function 時自動補上下文參數 |
+| `implicit val view: DataView[A, B]` | 提供某種型別能力/轉換規則，讓 extension API 可使用 |
+
 | 規模 | 建議 |
 |------|------|
 | 小 project / 少量 mapping | explicit adapter（手寫一次更直白） |

@@ -13,7 +13,7 @@
 
 ## 這是什麼
 
-- **講義（[`handout/`](handout/)）**：14 篇、約 3,300 行的繁體中文教學講義，結合完整敘述、速查表與程式碼食譜，技術術語與 code 保留英文。
+- **講義（[`handout/`](handout/)）**：14 篇、約 4,300 行的繁體中文教學講義，結合完整敘述、速查表與程式碼食譜，技術術語與 code 保留英文。
 - **範例專案（[`examples/`](examples/)）**：把講義的 core-Chisel 食譜實作成真正的 module ＋ **ChiselSim** 測試，並用 CI 驗證。
 - **基準版本**：**Chisel 7.13.0** + Scala 2.13.18 + **ChiselSim**（測試框架；`ChiselTest` 已 deprecated）。
 
