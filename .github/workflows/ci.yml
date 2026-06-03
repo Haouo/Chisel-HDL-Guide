@@ -4,9 +4,20 @@ on:
   push:
   pull_request:
 
+# 同一分支有新 push 時取消尚在跑的舊 run
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# 所有 run step 預設在 chisel-template/ 內執行
+defaults:
+  run:
+    working-directory: chisel-template
+
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    # ubuntu-24.04 的 apt verilator 為 5.x，ChiselSim 需要
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -19,9 +30,9 @@ jobs:
       - name: Install sbt
         uses: sbt/setup-sbt@v1
 
-      # ChiselSim 的模擬後端需要 Verilator
-      - name: Install Verilator
+      - name: Install Verilator (ChiselSim simulation backend)
         run: sudo apt-get update && sudo apt-get install -y verilator
+        working-directory: .
 
       - name: Compile
         run: sbt compile

@@ -1,0 +1,16 @@
+# 統一換行為 LF（避免跨平台 Windows/Mac/Linux 的 CRLF 問題）
+* text=auto eol=lf
+
+# 明確標記文字檔
+*.scala      text
+*.sbt        text
+*.md         text
+*.yml        text
+*.properties text
+
+# 產生物標記為 generated（不計入語言統計、diff 摺疊）
+*.sv  linguist-generated=true
+*.fir linguist-generated=true
+
+# 若想讓 GitHub 語言列以 Scala 為主、把講義視為文件，取消下行註解：
+# *.md linguist-documentation

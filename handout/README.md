@@ -18,6 +18,10 @@
 
 > 全範例以 **Chisel 7 + ChiselSim** 撰寫；`ChiselTest` 僅在「legacy 對照框」出現。
 
+> 📌 **程式碼驗證範圍**：講義內的 code 以**教學示意**為主，並非每段都經編譯。
+> 經 CI 完整驗證（編譯 → 產生 SystemVerilog → Verilator 實跑通過）的版本在 [`../chisel-template/`](../chisel-template/)。
+> 進階 track 的 Part 10（Chipyard / Diplomacy / TileLink）為**概念示意**，API 屬 rocket-chip / chipyard，非 core Chisel。
+
 ---
 
 ## 核心觀念（全程關鍵）
@@ -57,8 +61,6 @@ when (io.valid) { ... }        // Hardware run-time：真正的硬體（mux / re
 | **10** | [`10-Chipyard-SoC生成器.md`](10-Chipyard-SoC生成器.md) | Config fragments、`Parameters`/`Field`、`LazyModule`、**Diplomacy/TileLink**、RegMapper、IO/HarnessBinders、RoCC |
 | **11** | [`11-教學專案與心智模型.md`](11-教學專案與心智模型.md) | **Chipyard-lite** 專案結構、mini config、core 不知周邊、最終心智模型 |
 | **附** | [`99-附錄.md`](99-附錄.md) | Verilog 對照、術語中英表、**陷阱+慣用法總表**、版本注記、資源 |
-
-> 規劃藍圖見上層 [`../Chisel-Handout-規劃.md`](../Chisel-Handout-規劃.md)。
 
 ---
 
