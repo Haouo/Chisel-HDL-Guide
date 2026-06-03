@@ -13,7 +13,7 @@
 
 ## 這是什麼
 
-- **講義（[`handout/`](handout/)）**：14 篇、約 2,300 行的繁體中文速查＋程式碼食譜，技術術語與 code 保留英文。
+- **講義（[`handout/`](handout/)）**：14 篇、約 3,300 行的繁體中文教學講義，結合完整敘述、速查表與程式碼食譜，技術術語與 code 保留英文。
 - **範例專案（[`examples/`](examples/)）**：把講義的 core-Chisel 食譜實作成真正的 module ＋ **ChiselSim** 測試，並用 CI 驗證。
 - **基準版本**：**Chisel 7.13.0** + Scala 2.13.18 + **ChiselSim**（測試框架；`ChiselTest` 已 deprecated）。
 
@@ -24,7 +24,7 @@
 ## ✨ 特色
 
 - **以 ChiselSim 為主**：全程使用官方現行的 `ChiselSim`，並標明 `ChiselTest` 已被官方棄用。
-- **統一食譜版型**：每節＝一句話 → 最小可跑骨架 → 語法速查 → 常見陷阱 ⚠️ → 練習 →（進階加「適合/不適合」表與心智模型）。
+- **統一教學版型**：每節＝設計直覺 → 最小可跑骨架 → 語法速查 → 常見陷阱 ⚠️ → 有完成標準的練習 →（進階加「適合/不適合」表與心智模型）。
 - **基礎到架構雙軌**：基礎 track 帶你做出會跑的 CPU；進階 track 一路到 Diplomacy / TileLink / Chipyard 心智模型。
 - **真的能跑**：範例專案在 Verilator 5.048 下 **9/9 測試通過**，全部 module 都能產生 SystemVerilog。
 

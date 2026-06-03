@@ -5,11 +5,29 @@
 > **本章心智模型**：你寫的每一行 Chisel，elaboration 後會變成什麼硬體？
 > 是 wire、mux、register、decoder，還是複製 N 份 module？隨時自問這句。
 
+本章是整份講義的地基。Chisel 的抽象很多，但乾淨 RTL 仍然只有幾件事：
+明確的型別與寬度、語意清楚的介面、完整的組合預設值、可預期的 reset 行為、
+以及不把硬體資料結構寫成一堆散落訊號。
+
+學完本章後，讀者應該能看到一段 Chisel，立刻判斷哪些東西會變成 wire、哪些會變成 register、
+哪些只是 Scala 在生成期用來展開電路的集合。這個能力比背 API 更重要，因為後面的 pipeline、
+cache、generator、SoC integration 都只是同一套規則在更大尺度上的應用。
+
+**本章路線圖**
+
+- 先學：型別/寬度、Bundle、組合預設值、Reg、Vec/Seq、Module 階層。
+- 會踩坑：漏 `.W`、`==`/`===` 混淆、組合邏輯沒 default、payload bundle 帶方向。
+- 最後能做：寫出介面語意清楚、reset 可預期、沒有未連線/latch 的小型 RTL。
+
 ---
 
 ## M1.1 型別與常數
 
 **一句話**：描述線路的 bit 寬與字面值。
+
+型別與寬度是 RTL 的契約。Verilog 可以讓很多寬度隱式延伸或截斷，Chisel 也會做 width inference，
+但教學與大型設計中最好養成「重要邊界明確寫寬度」的習慣。尤其 top-level IO、memory data、
+bus address、register file 這些跨模組訊號，不應該靠推斷猜出來。
 
 ```scala
 UInt(8.W)   SInt(10.W)   Bool()         // 型別（width 用 .W）
@@ -34,6 +52,10 @@ UInt(8.W)   SInt(10.W)   Bool()         // 型別（width 用 .W）
 ## M1.2 用 Bundle 表達硬體語意（★乾淨 RTL 第一守則）
 
 **一句話**：不要散落 scalar IO，定義語意化 interface。
+
+Bundle 的價值不是少打幾行，而是讓資料在設計中帶著語意移動。當 `addr`、`data`、`mask`、
+`isWrite` 被包成 `MemReq`，review 時就能知道它們應該一起穿過 pipeline、queue、arbiter 與 bus。
+如果它們散落成四條 wire，後續加欄位、加 assertion、加 trace 都會變得脆弱。
 
 ### 不好 vs 好
 
@@ -76,6 +98,10 @@ val sink = Flipped(Decoupled(new MemReq)) // consumer
 
 **一句話**：純由輸入決定輸出（無 register）。
 
+寫組合邏輯時，先問輸出在所有輸入組合下是否都有定義。`WireDefault`、`otherwise`、
+以及一開始給 `io.y := 0.U` 都是在回答這個問題。Chisel 的 last-connect-wins 很適合描述
+「先給預設，再由特殊條件覆蓋」的控制邏輯，但前提是你知道覆蓋順序就是硬體 mux 的優先序。
+
 ```scala
 io.y := (io.a & io.b) | io.c                 // (a) 直接運算
 io.y := Mux(io.sel, io.a, io.b)              // (b) 二選一
@@ -105,6 +131,10 @@ switch(io.op) { is(0.U){ io.y := io.a + io.b }; is(1.U){ io.y := io.a - io.b } }
 
 **一句話**：先給安全 default，再條件覆蓋，杜絕 latch 與「忘了連」。
 
+這是控制邏輯最重要的寫法之一。先建立一個合法、保守的 default，再讓 decode、hazard、
+exception 或分支條件局部覆蓋欄位。這種寫法讓新增控制訊號時比較不會漏接，也讓 code review
+可以集中檢查「哪些情況改變 default」，而不是追每條 wire 的所有分支。
+
 ```scala
 // ✗ 危險：cond 不成立時 x 未定義
 val x = Wire(UInt(32.W)); when(cond) { x := a }
@@ -126,6 +156,10 @@ when(special) { ctrl.regWrite := true.B }     // 只覆蓋需要的欄位
 ## M1.5 暫存器與時序
 
 **一句話**：flip-flop；clock/reset 隱含自動連接。
+
+`Reg` 與 `Wire` 的差異就是 cycle 邊界。凡是需要跨 cycle 保存的資料，必須進 register；
+凡是只在同一拍內組合計算的中繼值，不應該誤放進 register。初學者常把修 bug 的直覺寫成
+「加一個 Reg」，但這會改變 pipeline latency。每加一個 register，都要能說清楚它切在哪兩個階段之間。
 
 ```scala
 val reg = RegInit(0.U(8.W)); reg := reg + 1.U   // 有 reset 初值的 counter
@@ -166,6 +200,11 @@ val respValid = ShiftRegister(reqFire, 2)   // 兩拍後 response 有效
 
 **一句話**：`Bundle`=struct、`Vec`=硬體陣列、`Seq`=elaboration-time 集合。
 
+`Vec` 與 `Seq` 是 Chisel 初學者最容易混淆的地方。`Seq` 是 Scala 的集合，只存在於生成期；
+你可以用它收集一批 module、wire 或參數，再用 `for/map` 展開結構。`Vec` 是硬體型別，
+可以用 `UInt` 動態索引，因此會生成 mux 或 register array。當 index 來自硬體訊號時，
+你幾乎一定需要 `Vec`。
+
 ```scala
 val rf = Reg(Vec(32, UInt(32.W)))     // register file（硬體陣列）
 rf(io.waddr) := io.wdata
@@ -204,6 +243,10 @@ val data  = Reg(Vec(n, UInt(64.W)))
 
 ## M1.7 Module 與階層；bulk connect 與 `DontCare`
 
+階層化的目的不是把程式碼切小而已，而是建立清楚的 ownership。子模組應該暴露穩定的 IO 契約；
+上層負責實例化與連線，不應該伸手改子模組內部狀態。`<>` 很方便，但它依賴方向正確，
+因此 payload bundle 不帶方向、protocol wrapper 決定方向的 convention 會在這裡開始回收價值。
+
 ```scala
 class Top extends Module {
   val io  = IO(new Bundle { val x = Input(UInt(8.W)); val y = Output(UInt(8.W)) })
@@ -241,6 +284,6 @@ val uop = Wire(new MicroOp); uop := DontCare; uop.valid := false.B  // invalid p
 對應：§2.5。
 
 **練習**
-- ★ 寫 4-bit `Mux4`，用 `Mux`、`MuxLookup`、`switch` 三種寫法。
-- ★ 把一組散落 IO 重構成語意化 `AluIO`（req/resp bundle）。
-- ★★ 寫 32×32 register file（雙讀單寫、`x0` 恆 0、valid/payload 分離不適用此例），ChiselSim 驗證（見 Part 3）。
+- ★ 寫 4-bit `Mux4`，用 `Mux`、`MuxLookup`、`switch` 三種寫法。完成標準：三個版本在相同測試下輸出一致。
+- ★ 把一組散落 IO 重構成語意化 `AluIO`（req/resp bundle）。完成標準：payload bundle 不含 `Input`/`Output`。
+- ★★ 寫 32×32 register file（雙讀單寫、`x0` 恆 0、valid/payload 分離不適用此例），ChiselSim 驗證（見 Part 3）。完成標準：寫入 x0 後讀出仍為 0。

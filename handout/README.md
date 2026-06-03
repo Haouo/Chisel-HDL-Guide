@@ -5,6 +5,15 @@
 > **讀者**：已修過數位邏輯、**不會 Scala**（基礎track）；想進到架構層的人（進階track）
 > **基準版本**：**Chisel 7.13.0** + Scala 2.13.18 + **ChiselSim**
 
+這份講義不是要把 Chisel 當成「比較短的 Verilog」來教，而是把它當成
+**硬體生成語言**來學。讀者應該先掌握乾淨 RTL 的寫法，再理解如何用 Scala
+把同一套 RTL discipline 擴展成可參數化、可測試、可整合的設計家族。
+
+每一章都分成兩層：第一層是可以快速查找的語法與慣用法；第二層是背後的設計理由。
+如果你只是照抄程式碼，會很快卡在 width、reset、handshake、memory latency、pipeline hazard
+這些硬體問題上。正確的讀法是：先問「這段 elaboration 後會長成什麼硬體」，
+再看 Chisel 提供了哪個抽象讓這件事更容易維護。
+
 ---
 
 ## ⚠️ 版本須知（最重要的一件事）
@@ -21,6 +30,17 @@
 > 📌 **程式碼驗證範圍**：講義內的 code 以**教學示意**為主，並非每段都經編譯。
 > 經 CI 完整驗證（編譯 → 產生 SystemVerilog → Verilator 實跑通過）的版本在 [`../examples/`](../examples/)。
 > 進階 track 的 Part 10（Chipyard / Diplomacy / TileLink）為**概念示意**，API 屬 rocket-chip / chipyard，非 core Chisel。
+
+### 程式碼標記
+
+講義中的程式碼依用途分成四種，閱讀時先看標記再決定能不能直接複製：
+
+| 標記 | 意義 | 讀法 |
+|------|------|------|
+| **可跑範例** | 對應 [`../examples/`](../examples/) 中已驗證 module/test | 可直接跑、改、測 |
+| **教學骨架** | 語法與結構接近實作，但省略周邊 glue code | 適合照著補成完整 module |
+| **概念示意** | 用短碼說明設計模式，未保證可獨立編譯 | 看硬體意圖，不要直接貼上 |
+| **Rocket/Chipyard API** | 屬 rocket-chip/chipyard 生態，版本可能變動 | 讀心智模型，實作時查目標版本文件 |
 
 ---
 
@@ -67,6 +87,15 @@ when (io.valid) { ... }        // Hardware run-time：真正的硬體（mux / re
 ## 食譜版型
 
 每節：① 一句話 → ② 最小可跑骨架 → ③ 語法/慣用法速查 → ④ 陷阱 ⚠️ →（進階加 ⑤「適合/不適合」表 ⑥ 心智模型）→ 練習 → 書/docs 對應。
+
+授課或自學時，建議把每節再補成三個動作：
+
+1. 先用 Verilog/硬體直覺說清楚要產生的電路。
+2. 再看 Chisel 寫法，指出哪些是生成期 Scala，哪些是硬體 runtime。
+3. 最後到 [`../examples/`](../examples/) 找對應 module 或 test，改一個小需求並重新跑測試。
+
+這樣讀會比「一次背完 API」穩。Chisel 的難點通常不在語法，而在你是否能持續分清：
+Scala 值、Chisel Data、wire、reg、IO、protocol、harness 各自屬於哪一層。
 
 ---
 
