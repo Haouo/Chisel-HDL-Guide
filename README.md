@@ -3,7 +3,7 @@
 > 一份從**乾淨 RTL** 到 **Chipyard 風格 SoC 生成器**的 Chisel HDL 中文講義，搭配**已驗證可跑**的範例專案。
 > A hands-on, Traditional-Chinese Chisel HDL handout — from clean RTL to a Chipyard-style SoC generator — with a fully validated runnable example project.
 
-[![CI](https://github.com/Haouo/Ultimate-Chisel-Tutorial/actions/workflows/ci.yml/badge.svg)](https://github.com/Haouo/Ultimate-Chisel-Tutorial/actions/workflows/ci.yml)
+[![CI](https://github.com/Haouo/Chisel-HDL-Guide/actions/workflows/ci.yml/badge.svg)](https://github.com/Haouo/Chisel-HDL-Guide/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Chisel](https://img.shields.io/badge/Chisel-7.13.0-brightgreen)
 ![Scala](https://img.shields.io/badge/Scala-2.13.16-red)
@@ -59,8 +59,8 @@
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/Haouo/Ultimate-Chisel-Tutorial.git
-cd Ultimate-Chisel-Tutorial/examples
+git clone https://github.com/Haouo/Chisel-HDL-Guide.git
+cd Chisel-HDL-Guide/examples
 
 # 需要 JDK 8–21、sbt；模擬另需 Verilator
 sbt compile                  # 編譯
