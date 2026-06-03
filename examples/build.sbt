@@ -1,5 +1,5 @@
 // Chisel Handout 範例專案 —— 基準版本 Chisel 7.13.0 + Scala 2.13 + ChiselSim
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "2.13.18"
 ThisBuild / version      := "0.1.0"
 ThisBuild / organization := "handout"
 

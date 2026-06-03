@@ -3,7 +3,7 @@
 這是 [`../handout/`](../handout/) 的配套**可執行專案**：把 Handout 裡 Part 0–6 的
 core-Chisel 食譜實作成真正的 module + **ChiselSim** 測試，並用 CI 驗證。
 
-- **基準版本**：Chisel **7.13.0** + Scala 2.13.16 + ChiselSim（firtool 1.149.0 自動下載）
+- **基準版本**：Chisel **7.13.0** + Scala 2.13.18 + ChiselSim（firtool 1.149.0 自動下載）
 - **測試框架**：ChiselSim（`chisel3.simulator.scalatest.ChiselSim`）— **不是** 已 deprecated 的 ChiselTest
 
 ---
@@ -33,7 +33,7 @@ sbt "runMain handout.Main"  # 產生所有 module 的 SystemVerilog
 不想裝 sbt？用 scala-cli 單獨編譯：
 ```bash
 scala-cli compile src/main/scala src/test/scala \
-  --scala 2.13.16 \
+  --scala 2.13.18 \
   --dep org.chipsalliance::chisel:7.13.0 \
   --compiler-plugin org.chipsalliance:::chisel-plugin:7.13.0 \
   --dep org.scalatest::scalatest:3.2.19

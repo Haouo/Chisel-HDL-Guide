@@ -3,7 +3,7 @@
 > **Subtitle**：From Clean RTL Generator to Chipyard-style SoC Generator
 > **形式**：速查表（cheat-sheet）＋ 程式碼食譜（cookbook）＋ 慣用法/心智模型
 > **讀者**：已修過數位邏輯、**不會 Scala**（基礎track）；想進到架構層的人（進階track）
-> **基準版本**：**Chisel 7.13.0** + Scala 2.13.16 + **ChiselSim**
+> **基準版本**：**Chisel 7.13.0** + Scala 2.13.18 + **ChiselSim**
 
 ---
 

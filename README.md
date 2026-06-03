@@ -6,7 +6,7 @@
 [![CI](https://github.com/Haouo/Chisel-HDL-Guide/actions/workflows/ci.yml/badge.svg)](https://github.com/Haouo/Chisel-HDL-Guide/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Chisel](https://img.shields.io/badge/Chisel-7.13.0-brightgreen)
-![Scala](https://img.shields.io/badge/Scala-2.13.16-red)
+![Scala](https://img.shields.io/badge/Scala-2.13.18-red)
 ![Tests](https://img.shields.io/badge/ChiselSim-9%2F9%20passing-success)
 
 ---
@@ -15,7 +15,7 @@
 
 - **講義（[`handout/`](handout/)）**：14 篇、約 2,300 行的繁體中文速查＋程式碼食譜，技術術語與 code 保留英文。
 - **範例專案（[`examples/`](examples/)）**：把講義的 core-Chisel 食譜實作成真正的 module ＋ **ChiselSim** 測試，並用 CI 驗證。
-- **基準版本**：**Chisel 7.13.0** + Scala 2.13.16 + **ChiselSim**（測試框架；`ChiselTest` 已 deprecated）。
+- **基準版本**：**Chisel 7.13.0** + Scala 2.13.18 + **ChiselSim**（測試框架；`ChiselTest` 已 deprecated）。
 
 > 適合對象:**已修過數位邏輯、但不會 Scala** 的讀者；想一路學到處理器/SoC 的人。
 
