@@ -10,14 +10,14 @@ object Main extends App {
     println(s"// ===== $name =====")
     println(ChiselStage.emitSystemVerilog(gen, firtoolOpts = opts))
   }
-  emit("Blinky",   new Blinky(1000))
-  emit("Alu",      new Alu)
-  emit("Mux4",     new Mux4)
+  emit("Blinky", new Blinky(1000))
+  emit("Alu", new Alu)
+  emit("Mux4", new Mux4)
   emit("UpCounter", new UpCounter(9))
   emit("RegisterFile", new RegisterFile(32, 32))
   emit("FallDetect", new FallDetect)
   emit("SkidBuffer", new SkidBuffer(UInt(8.W)))
   emit("QueueFifo", new QueueFifo(8, 4))
   emit("AdderTree", new AdderTree(8, 16))
-  emit("Wildcat",  new Wildcat(Seq.fill(16)(BigInt(0))))
+  emit("Wildcat", new Wildcat(Seq.fill(16)(BigInt(0))))
 }

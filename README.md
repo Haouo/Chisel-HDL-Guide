@@ -14,7 +14,7 @@
 ## 這是什麼
 
 - **講義（[`handout/`](handout/)）**：14 篇、約 2,300 行的繁體中文速查＋程式碼食譜，技術術語與 code 保留英文。
-- **範例專案（[`chisel-template/`](chisel-template/)）**：把講義的 core-Chisel 食譜實作成真正的 module ＋ **ChiselSim** 測試，並用 CI 驗證。
+- **範例專案（[`examples/`](examples/)）**：把講義的 core-Chisel 食譜實作成真正的 module ＋ **ChiselSim** 測試，並用 CI 驗證。
 - **基準版本**：**Chisel 7.13.0** + Scala 2.13.16 + **ChiselSim**（測試框架；`ChiselTest` 已 deprecated）。
 
 > 適合對象:**已修過數位邏輯、但不會 Scala** 的讀者；想一路學到處理器/SoC 的人。
@@ -50,7 +50,7 @@
 | [11](handout/11-教學專案與心智模型.md) | Chipyard-lite 專案結構、最終心智模型 |
 | [附錄](handout/99-附錄.md) | Verilog 對照、術語表、**陷阱+慣用法總表**、版本注記 |
 
-### 範例專案 `chisel-template/`（[說明](chisel-template/README.md)）
+### 範例專案 `examples/`（[說明](examples/README.md)）
 
 10 個 module（Blinky / Alu / Mux4 / UpCounter / RegisterFile / Pwm / FallDetect / SkidBuffer / QueueFifo / AdderTree / Wildcat …）＋ 9 個 ChiselSim 測試。
 
@@ -60,7 +60,7 @@
 
 ```bash
 git clone https://github.com/Haouo/Ultimate-Chisel-Tutorial.git
-cd Ultimate-Chisel-Tutorial/chisel-template
+cd Ultimate-Chisel-Tutorial/examples
 
 # 需要 JDK 8–21、sbt；模擬另需 Verilator
 sbt compile                  # 編譯

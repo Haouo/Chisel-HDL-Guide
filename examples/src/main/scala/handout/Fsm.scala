@@ -10,14 +10,14 @@ object DetectState extends ChiselEnum {
 
 class FallDetect extends Module {
   val io = IO(new Bundle {
-    val in   = Input(Bool())
+    val in = Input(Bool())
     val fell = Output(Bool())
   })
   val state = RegInit(DetectState.sLow)
   switch(state) {
-    is(DetectState.sLow)  { state := Mux(io.in, DetectState.sHigh, DetectState.sLow) }
+    is(DetectState.sLow) { state := Mux(io.in, DetectState.sHigh, DetectState.sLow) }
     is(DetectState.sHigh) { state := Mux(io.in, DetectState.sHigh, DetectState.sFell) }
     is(DetectState.sFell) { state := Mux(io.in, DetectState.sHigh, DetectState.sLow) }
   }
-  io.fell := state === DetectState.sFell   // Moore：輸出只看 state
+  io.fell := state === DetectState.sFell // Moore：輸出只看 state
 }

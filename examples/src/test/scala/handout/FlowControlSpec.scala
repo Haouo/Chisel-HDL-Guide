@@ -36,7 +36,7 @@ class OneStageSpec extends AnyFlatSpec with Matchers with ChiselSim {
       dut.io.enq.valid.poke(false.B)
       dut.io.deq.valid.expect(true.B)
       dut.io.deq.bits.expect(42.U)
-      dut.io.enq.ready.expect(false.B)   // full now
+      dut.io.enq.ready.expect(false.B) // full now
     }
   }
 }

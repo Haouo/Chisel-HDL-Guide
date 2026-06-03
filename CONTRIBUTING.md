@@ -14,12 +14,12 @@
 
 - 維持既有「食譜版型」:① 一句話 ② 最小骨架 ③ 語法速查 ④ 陷阱 ⚠️ ⑤ 練習 ⑥ 對應章節。
 - 繁體中文為主，technical terms 與程式碼保留英文。
-- **講義內的程式碼若是新加的「可宣稱能跑」範例，請一併加進 `chisel-template/` 並通過 CI**（見下）。
+- **講義內的程式碼若是新加的「可宣稱能跑」範例，請一併加進 `examples/` 並通過 CI**（見下）。
 
-## 修改範例專案（`chisel-template/`）
+## 修改範例專案（`examples/`）
 
 ```bash
-cd chisel-template
+cd examples
 sbt compile                  # 編譯
 sbt test                     # ChiselSim 測試（需 Verilator 5.x）
 sbt "runMain handout.Main"   # 產生 SystemVerilog

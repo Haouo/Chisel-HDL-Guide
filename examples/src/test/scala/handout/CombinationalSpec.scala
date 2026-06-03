@@ -12,10 +12,10 @@ class AluSpec extends AnyFlatSpec with Matchers with ChiselSim {
         dut.io.req.op.poke(op.U); dut.io.req.src1.poke(a.U); dut.io.req.src2.poke(b.U)
         dut.io.resp.result.expect(exp.U)
       }
-      check(0, 7, 5, 12)        // add
-      check(1, 7, 5, 2)         // sub
-      check(2, 0xF0, 0x0F, 0x00) // and
-      check(3, 0xF0, 0x0F, 0xFF) // or
+      check(0, 7, 5, 12) // add
+      check(1, 7, 5, 2) // sub
+      check(2, 0xf0, 0x0f, 0x00) // and
+      check(3, 0xf0, 0x0f, 0xff) // or
     }
   }
 }

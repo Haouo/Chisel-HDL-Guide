@@ -19,7 +19,7 @@
 > 全範例以 **Chisel 7 + ChiselSim** 撰寫；`ChiselTest` 僅在「legacy 對照框」出現。
 
 > 📌 **程式碼驗證範圍**：講義內的 code 以**教學示意**為主，並非每段都經編譯。
-> 經 CI 完整驗證（編譯 → 產生 SystemVerilog → Verilator 實跑通過）的版本在 [`../chisel-template/`](../chisel-template/)。
+> 經 CI 完整驗證（編譯 → 產生 SystemVerilog → Verilator 實跑通過）的版本在 [`../examples/`](../examples/)。
 > 進階 track 的 Part 10（Chipyard / Diplomacy / TileLink）為**概念示意**，API 屬 rocket-chip / chipyard，非 core Chisel。
 
 ---
