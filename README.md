@@ -24,9 +24,9 @@
 ## ✨ 特色
 
 - **以 ChiselSim 為主**：全程使用官方現行的 `ChiselSim`，並標明 `ChiselTest` 已被官方棄用。
-- **統一教學版型**：每節＝設計直覺 → 最小可跑骨架 → 語法速查 → 常見陷阱 ⚠️ → 有完成標準的練習 →（進階加「適合/不適合」表與心智模型）。
-- **基礎到架構雙軌**：基礎 track 帶你做出會跑的 CPU；進階 track 一路到 Diplomacy / TileLink / Chipyard 心智模型。
-- **真的能跑**：範例專案在 Verilator 5.048 下 **9/9 測試通過**，全部 module 都能產生 SystemVerilog。
+- **統一教學版型**：每節先講問題場景，再拆 Chisel 寫法、硬體長相、常見陷阱與驗收方式。
+- **基礎到架構雙軌**：基礎 track 建立最小 RTL / pipeline / 測試能力；進階 track 一路到 Diplomacy / TileLink / Chipyard 心智模型。
+- **真的能跑**：`examples/` 在 Verilator 5.048 下 **9/9 測試通過**，`handout.Main` 會 emit 10 個 top-level module 的 SystemVerilog。
 
 ---
 
@@ -52,7 +52,7 @@
 
 ### 範例專案 `examples/`（[說明](examples/README.md)）
 
-10 個 module（Blinky / Alu / Mux4 / UpCounter / RegisterFile / Pwm / FallDetect / SkidBuffer / QueueFifo / AdderTree / Wildcat …）＋ 9 個 ChiselSim 測試。
+範例原始碼涵蓋 Blinky / Alu / Mux4 / UpCounter / RegisterFile / Pwm / FallDetect / SkidBuffer / QueueFifo / AdderTree / Wildcat 等教學 module；目前 `handout.Main` emit 10 個 top-level module，並有 9 個 ChiselSim 測試。
 
 ---
 
@@ -77,7 +77,7 @@ sbt "runMain handout.Main"   # 產生所有 module 的 SystemVerilog
 | 項目 | 狀態 |
 |------|------|
 | 所有 module 與 ChiselSim 測試**編譯通過** | ✅ |
-| 全部 10 個 module **elaboration → SystemVerilog**（firtool 1.149.0） | ✅ |
+| `handout.Main` 中 10 個 top-level module **elaboration → SystemVerilog**（firtool 1.149.0） | ✅ |
 | ChiselSim 測試**實際模擬通過**（Verilator 5.048） | ✅ 9/9 passed |
 
 ---
